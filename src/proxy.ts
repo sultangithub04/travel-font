@@ -59,7 +59,7 @@ export async function proxy(request: NextRequest) {
     }
 
     // Rule 4 : User is trying to access role based protected route
-    if (routerOwner === "ADMIN" || routerOwner === "DOCTOR" || routerOwner === "PATIENT") {
+    if (routerOwner === "ADMIN" ||  routerOwner === "TRAVELLER") {
         if (userRole !== routerOwner) {
             return NextResponse.redirect(new URL(getDefaultDashboardRoute(userRole as UserRole), request.url))
         }
