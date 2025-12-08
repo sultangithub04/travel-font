@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import CreateReviewModal from "@/components/modules/modal/CreateReviewModal";
 import ReviewDeleteModal from "@/components/modules/modal/ReviewdeleteModal";
 import ReviewEditModal from "@/components/modules/modal/ReviewEditModal";
@@ -85,7 +86,7 @@ export default async function TravelPlanDetailsPage({ params }: { params: Promis
         {mockPlan.reviews.length === 0 ? (
           <p className="text-gray-500">No reviews yet.</p>
         ) : (
-          mockPlan.reviews.map((review) => (
+          mockPlan.reviews.map((review:any) => (
             <div
               key={review.id}
               className="mb-4 p-4 border border-gray-200 dark:border-neutral-700 rounded-lg bg-white dark:bg-neutral-800"

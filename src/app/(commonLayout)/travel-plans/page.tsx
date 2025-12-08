@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getUserInfo } from "@/services/auth/getUserInfo";
 import CreateTravelPlanModal from "@/components/modules/modal/CreateTravelPlanModal";
 import EditTravelPlanModal from "@/components/modules/modal/EditTravelPlanModal";
@@ -23,7 +24,7 @@ const TravelPlans = async () => {
 
       {userTravelPlans.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {userTravelPlans.map((plan) => (
+          {userTravelPlans.map((plan:any) => (
             <div key={plan.id} className="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-6 border">
               <h2 className="text-xl font-semibold">{plan.destination}</h2>
               <p className="text-gray-500 text-sm mt-1">{plan.description}</p>

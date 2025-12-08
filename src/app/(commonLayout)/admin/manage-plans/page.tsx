@@ -6,6 +6,8 @@ import { toast } from "sonner";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+type StatusType = "approved" | "pending" | "rejected";
+
 type TravelPlanType = {
   _id: string;
   title: string;
@@ -13,7 +15,7 @@ type TravelPlanType = {
   startDate: string;
   endDate: string;
   budgetRange: string;
-  status: "approved" | "pending" | "rejected";
+  status: StatusType;
   createdAt: string;
   user: {
     name: string;
@@ -68,12 +70,13 @@ export default function ManageTravelPlansPage() {
     setTimeout(() => {
       setPlans(MOCK_PLANS);
       setLoading(false);
-    }, 800); // simulate network delay
+    }, 800);
   };
 
-  const updateStatus = (id: string, status: string) => {
+  // ⭐ FIXED: Strong typing for status
+  const updateStatus = (id: string, status: StatusType) => {
     const updated = plans.map((plan) =>
-      plan._id === id ? { ...plan, status: status as any } : plan
+      plan._id === id ? { ...plan, status } : plan
     );
     setPlans(updated);
     toast.success(`Plan marked as ${status}`);
@@ -106,8 +109,7 @@ export default function ManageTravelPlansPage() {
           {plans.map((plan) => (
             <Card key={plan._id}>
               <CardContent className="flex justify-between flex-col md:flex-row gap-4 p-4">
-
-                {/* LEFT SIDE INFO */}
+                {/* LEFT SIDE */}
                 <div className="flex flex-col gap-1">
                   <h2 className="text-xl font-semibold">{plan.title}</h2>
 
@@ -133,20 +135,19 @@ export default function ManageTravelPlansPage() {
                   </p>
 
                   <p className="text-xs mt-1">
-                    Posted on{" "}
-                    {new Date(plan.createdAt).toLocaleDateString()}
+                    Posted on {new Date(plan.createdAt).toLocaleDateString()}
                   </p>
 
                   <p className="text-xs font-semibold">
                     Status:
                     <span
-                      className={
+                      className={`ml-1 ${
                         plan.status === "approved"
-                          ? "text-green-600 ml-1"
+                          ? "text-green-600"
                           : plan.status === "rejected"
-                          ? "text-red-600 ml-1"
-                          : "text-orange-600 ml-1"
-                      }
+                          ? "text-red-600"
+                          : "text-orange-600"
+                      }`}
                     >
                       {plan.status.toUpperCase()}
                     </span>

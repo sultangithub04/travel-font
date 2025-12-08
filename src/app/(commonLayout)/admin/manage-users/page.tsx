@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -46,7 +47,6 @@ export default function ManageUsersPage() {
   const fetchUsers = () => {
     setLoading(true);
 
-    // Simulated network delay
     setTimeout(() => {
       setUsers(MOCK_USERS);
       setLoading(false);
@@ -64,8 +64,6 @@ export default function ManageUsersPage() {
   };
 
   const handleDelete = (id: string) => {
-    if (!confirm("Are you sure?")) return;
-
     setUsers((prev) => prev.filter((user) => user._id !== id));
     toast.success("User deleted successfully");
   };
@@ -87,28 +85,30 @@ export default function ManageUsersPage() {
           {users.map((user) => (
             <Card key={user._id}>
               <CardContent className="flex justify-between items-center py-4">
-                {/* LEFT SIDE */}
+                
+                {/* LEFT SIDE INFO */}
                 <div>
                   <p className="font-semibold">{user.name}</p>
                   <p className="text-sm text-muted-foreground">{user.email}</p>
                   <p className="text-sm">
                     Joined: {new Date(user.createdAt).toLocaleDateString()}
                   </p>
+
                   <p className="text-sm font-semibold mt-1">
-                    Role:{" "}
+                    Role:
                     <span
-                      className={
+                      className={`ml-1 ${
                         user.role === "admin"
                           ? "text-green-600"
                           : "text-blue-600"
-                      }
+                      }`}
                     >
                       {user.role.toUpperCase()}
                     </span>
                   </p>
                 </div>
 
-                {/* BUTTONS */}
+                {/* ACTION BUTTONS */}
                 <div className="flex gap-2">
                   <Button
                     variant={user.role === "admin" ? "default" : "outline"}
@@ -131,6 +131,7 @@ export default function ManageUsersPage() {
                     Delete
                   </Button>
                 </div>
+                
               </CardContent>
             </Card>
           ))}

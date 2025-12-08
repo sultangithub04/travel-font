@@ -1,182 +1,141 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Loader2, Trash2, Check, X } from "lucide-react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
-type ReviewType = {
+
+type ReviewStatus = "approved" | "pending" | "rejected";
+
+interface ReviewType {
   _id: string;
-  user: { name: string; email: string };
+  userName: string;
+  message: string;
   rating: number;
-  comment: string;
-  status: "approved" | "pending" | "rejected";
+  status: ReviewStatus;
   createdAt: string;
-  travelPlan: {
-    title: string;
-    destination: string;
-  };
-};
+}
 
-// MOCK DATA
-const MOCK_REVIEWS: ReviewType[] = [
-  {
-    _id: "r1",
-    user: { name: "Rakib Hasan", email: "rakib@example.com" },
-    rating: 4,
-    comment: "Very enjoyable trip, recommended!",
-    status: "pending",
-    createdAt: "2025-01-12T09:30:00.000Z",
-    travelPlan: {
-      title: "Cox’s Bazar Tour",
-      destination: "Cox’s Bazar",
+const ReviewList = () => {
+  const [reviews, setReviews] = useState<ReviewType[]>([
+    {
+      _id: "1",
+      userName: "John Doe",
+      message: "Great plan! Enjoyed a lot.",
+      rating: 5,
+      status: "pending",
+      createdAt: "2025-02-10T10:30:00Z",
     },
-  },
-  {
-    _id: "r2",
-    user: { name: "Sara Khan", email: "sara@example.com" },
-    rating: 5,
-    comment: "Amazing experience with friends!",
-    status: "approved",
-    createdAt: "2024-12-20T10:00:00.000Z",
-    travelPlan: {
-      title: "Saint Martin Trip",
-      destination: "Saint Martin",
+    {
+      _id: "2",
+      userName: "Sarah Parker",
+      message: "Good value for money!",
+      rating: 4,
+      status: "approved",
+      createdAt: "2025-02-05T16:15:00Z",
     },
-  },
-  {
-    _id: "r3",
-    user: { name: "Mahidul Islam", email: "mahid@example.com" },
-    rating: 3,
-    comment: "Good place, but service was slow.",
-    status: "rejected",
-    createdAt: "2024-11-15T12:00:00.000Z",
-    travelPlan: {
-      title: "Sajek Valley",
-      destination: "Sajek",
+    {
+      _id: "3",
+      userName: "Mark Lee",
+      message: "Needs improvement",
+      rating: 3,
+      status: "rejected",
+      createdAt: "2025-02-01T09:00:00Z",
     },
-  },
-];
+  ]);
 
-export default function ManageReviewsPage() {
-  const [reviews, setReviews] = useState<ReviewType[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  const fetchReviews = async () => {
-    setLoading(true);
-
-    /// 🔥 MOCK API SIMULATION
-    setTimeout(() => {
-      setReviews(MOCK_REVIEWS);
-      setLoading(false);
-    }, 1000);
+  const formatDateTime = (dateStr: string) => {
+    return new Date(dateStr).toLocaleString("en-US", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
-  const updateStatus = async (id: string, status: string) => {
-    const updatedList = reviews.map((review) =>
-      review._id === id ? { ...review, status } : review
+  const updateStatus = (
+    id: string,
+    status: "approved" | "pending" | "rejected"
+  ) => {
+    setReviews((prev) =>
+      prev.map((review) =>
+        review._id === id ? { ...review, status } : review
+      )
     );
 
-    setReviews(updatedList);
     toast.success(`Review marked as ${status}`);
   };
 
-  const deleteReview = async (id: string) => {
-    const updatedList = reviews.filter((review) => review._id !== id);
-    setReviews(updatedList);
+  const deleteReview = (id: string) => {
+    setReviews((prev) => prev.filter((review) => review._id !== id));
     toast.success("Review deleted");
   };
 
-  useEffect(() => {
-    fetchReviews();
-  }, []);
-
   return (
-    <div className="container mx-auto max-w-6xl py-8">
-      <h1 className="text-2xl font-bold mb-6">Manage Reviews</h1>
+    <div className="space-y-4 p-4">
+      <h2 className="text-2xl font-bold mb-3">Reviews</h2>
 
-      {loading ? (
-        <div className="flex justify-center py-10">
-          <Loader2 className="animate-spin h-8 w-8" />
-        </div>
-      ) : reviews.length === 0 ? (
-        <p className="text-center text-gray-500">No reviews available</p>
-      ) : (
-        <div className="space-y-4">
-          {reviews.map((review) => (
-            <Card key={review._id}>
-              <CardContent className="flex flex-col md:flex-row justify-between items-center p-4 gap-4">
-
-                {/* LEFT SIDE DATA */}
-                <div className="flex flex-col gap-1">
-                  <p className="font-semibold text-lg">{review.user?.name}</p>
-                  <p className="text-sm">{review.user?.email}</p>
-
-                  <p className="mt-2">
-                    <span className="font-medium">Rating:</span> ⭐ {review.rating}/5
-                  </p>
-
-                  <p className="text-sm text-gray-700 italic">
-                    "{review.comment}"
-                  </p>
-
-                  <p className="text-xs text-muted-foreground mt-2">
-                    Plan: {review.travelPlan?.title} ({review.travelPlan?.destination})
-                  </p>
-
-                  <p className="text-xs text-gray-500">
-                    Date: {new Date(review.createdAt).toLocaleDateString()}
-                  </p>
-
-                  <p className="text-xs font-semibold">
-                    Status:{" "}
-                    <span
-                      className={
-                        review.status === "approved"
-                          ? "text-green-600"
-                          : review.status === "rejected"
-                          ? "text-red-600"
-                          : "text-orange-500"
-                      }
-                    >
-                      {review.status.toUpperCase()}
-                    </span>
-                  </p>
-                </div>
-
-                {/* ACTION BUTTONS */}
-                <div className="flex gap-2 flex-wrap">
-                  <Button
-                    variant="outline"
-                    onClick={() => updateStatus(review._id, "approved")}
-                    className="flex items-center gap-1"
-                  >
-                    <Check size={16} /> Approve
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    onClick={() => updateStatus(review._id, "rejected")}
-                    className="flex items-center gap-1 text-red-500"
-                  >
-                    <X size={16} /> Reject
-                  </Button>
-
-                  <Button
-                    variant="destructive"
-                    onClick={() => deleteReview(review._id)}
-                    className="flex items-center gap-1"
-                  >
-                    <Trash2 size={16} /> Delete
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      {reviews.length === 0 && (
+        <p className="text-gray-500">No reviews found</p>
       )}
+
+      {reviews.map((review) => (
+        <div
+          key={review._id}
+          className="border shadow-sm rounded-md p-4 flex justify-between items-start bg-white"
+        >
+          <div>
+            <p className="font-semibold">{review.userName}</p>
+            <p className="text-gray-700">{review.message}</p>
+
+            <p className="text-sm text-gray-500">
+              Rating: ⭐ {review.rating}/5
+            </p>
+
+            <p className="text-xs text-gray-400">
+              {formatDateTime(review.createdAt)}
+            </p>
+
+            <span
+              className={`inline-block mt-1 px-2 py-1 text-xs rounded ${
+                review.status === "approved"
+                  ? "bg-green-200 text-green-800"
+                  : review.status === "pending"
+                  ? "bg-yellow-200 text-yellow-800"
+                  : "bg-red-200 text-red-800"
+              }`}
+            >
+              {review.status}
+            </span>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <select
+              className="border px-2 py-1 rounded text-sm"
+              value={review.status}
+              onChange={(e) =>
+                updateStatus(
+                  review._id,
+                  e.target.value as ReviewStatus
+                )
+              }
+            >
+              <option value="approved">Approved</option>
+              <option value="pending">Pending</option>
+              <option value="rejected">Rejected</option>
+            </select>
+
+            <button
+              onClick={() => deleteReview(review._id)}
+              className="bg-red-500 text-white px-3 py-1 rounded text-xs hover:bg-red-600"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
   );
-}
+};
+
+export default ReviewList;

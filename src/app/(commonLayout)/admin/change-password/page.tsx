@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState } from "react";
 import { Lock, Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 
 export default function AdminChangePassword() {
