@@ -43,7 +43,7 @@ const topDestinations = [
 ];
 
 export default async function TopDestinations() {
-  const res= await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/travel-plans`)
+  const res= await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/travel-plans`, { cache: "no-store" })
   const result= await res.json()
   console.log(result.data);
   return (

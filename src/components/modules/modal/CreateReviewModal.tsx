@@ -28,7 +28,7 @@ export default function CreateReviewModal({ planId, planOwnerId }: { planId: num
       const emailFromSession = userInformation?.email;
 
       // Get user info
-      const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromSession}`);
+      const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromSession}`, { cache: "no-store" });
       const { data: userInfo } = await resultData.json();
 
       const payload = {

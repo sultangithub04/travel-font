@@ -9,7 +9,7 @@ export const createTravelPlan = async (data: FormData) => {
   const userInfo = await getUserInfo();
   const emailFromsession= userInfo?.email
  
-  const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromsession}`)
+  const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromsession}`,{ cache: "no-store" })
   const { data:user } = await resultData.json()
   const userId= user.id
   console.log(userId);

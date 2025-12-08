@@ -12,7 +12,7 @@ export default async function BlogDetailsPage({ params }: { params: Promise<{ id
         redirect("/login");
     }
     const { id } = await params
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/travaller/${id}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/travaller/${id}`, { cache: "no-store" });
     const responseData = await res.json();
     const results = responseData?.data;
     console.log(results);

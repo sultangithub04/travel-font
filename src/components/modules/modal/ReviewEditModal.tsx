@@ -50,7 +50,7 @@ export default function EditReviewModal({
       const userInformation = await getUserInfo();
       const emailFromSession = userInformation?.email;
 
-      const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromSession}`);
+      const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromSession}`,{ cache: "no-store" });
       const { data: userInfo } = await resultData.json();
 
       const payload = {

@@ -29,7 +29,7 @@ export default function CreateTravelPlanModal() {
     e.preventDefault();
     const userInformation = await getUserInfo();
     const emailFromsession = userInformation?.email
-    const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromsession}`)
+    const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromsession}`,{ cache: "no-store" })
     const { data:userInfo } = await resultData.json()
 
     const payload = {

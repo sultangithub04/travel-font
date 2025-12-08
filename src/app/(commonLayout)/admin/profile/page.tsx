@@ -27,9 +27,9 @@ const AdminProfile = async() => {
   const userInfo = await getUserInfo();
   const emailFromsession= userInfo?.email
  
-  const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromsession}`)
+  const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromsession}`, { cache: "no-store" })
   const { data } = await resultData.json()
-   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users`);
+   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users`, { cache: "no-store" });
 
   const responseData = await res.json();
 

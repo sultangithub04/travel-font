@@ -7,7 +7,7 @@ import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from
 
 const Explore = async () => {
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users`, { cache: "no-store" });
 
   const responseData = await res.json();
   const results = responseData?.data;
