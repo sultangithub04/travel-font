@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import Image from "next/image";
 import Link from "next/link";
@@ -27,7 +28,7 @@ const FeaturedTravelers = async () => {
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {travelers.slice(0, 3).map((traveler) => (
+          {travelers.slice(0, 3).map((traveler:any) => (
             <div
               key={traveler.id}
 

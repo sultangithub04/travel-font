@@ -1,5 +1,5 @@
 "use server";
-import { auth } from "@/lib/auth";
+
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { getUserInfo } from "./auth/getUserInfo";

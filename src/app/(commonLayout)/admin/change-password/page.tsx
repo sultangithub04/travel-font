@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 import { useState } from "react";
 import { Lock, Eye, EyeOff } from "lucide-react";
