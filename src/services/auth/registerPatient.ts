@@ -7,6 +7,11 @@ import { loginUser } from "./loginUser";
 const registerValidationZodSchema = z.object({
     name: z.string().min(1, { message: "Name is required" }),
     address: z.string().optional(),
+    bio: z.string().optional(),
+    travelInterests: z.string().optional(),
+    visitedCountries: z.string().optional(),
+    currentLocation: z.string().optional(),
+    profilePhoto: z.string().optional(),
     email: z.email({ message: "Valid email is required" }),
     password: z.string().min(6, {
         error: "Password is required and must be at least 6 characters long",
@@ -22,21 +27,25 @@ const registerValidationZodSchema = z.object({
 });
 
 
-export const registerPatient = async (_currentState: any, formData: any): Promise<any> => {
+export const registerPatient = async (_currentState: any, formData: FormData): Promise<any> => {
+    
     try {
-        console.log(formData.get("address"));
+
         const validationData = {
             name: formData.get('name'),
             address: formData.get('address'),
             email: formData.get('email'),
             password: formData.get('password'),
             confirmPassword: formData.get('confirmPassword'),
+            bio: formData.get('bio'),
+            travelInterests: formData.get('interests'),
+            visitedCountries: formData.get('visit'),
+            currentLocation: formData.get('location'),
         }
 
         const validatedFields = registerValidationZodSchema.safeParse(validationData);
 
-        console.log(validatedFields, "val");
-
+       
         if (!validatedFields.success) {
             return {
                 success: false,
@@ -52,25 +61,34 @@ export const registerPatient = async (_currentState: any, formData: any): Promis
 
         const registerData = {
             password: formData.get('password'),
-            patient: {
+            travaller: {
                 name: formData.get('name'),
                 address: formData.get('address'),
                 email: formData.get('email'),
+                bio: formData.get('bio'),
+                travelInterests: formData.get('interests'),
+                visitedCountries: formData.get('visit'),
+                currentLocation: formData.get('location'),
+
             }
         }
 
         const newFormData = new FormData();
 
         newFormData.append("data", JSON.stringify(registerData));
-
-        const res = await fetch("http://localhost:5000/api/v1/user/create-patient", {
+        const file = formData.get("file") as File | null;
+        if (file) {
+            newFormData.append("file", file);
+        }
+        
+        const res = await fetch("http://localhost:5000/api/auth/register", {
             method: "POST",
             body: newFormData,
         })
 
         const result = await res.json();
 
-        console.log(res, "res");
+       
 
         if (result.success) {
             await loginUser(_currentState, formData);

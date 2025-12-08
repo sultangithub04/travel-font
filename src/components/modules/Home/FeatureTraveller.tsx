@@ -1,38 +1,20 @@
-"use client";
 
 import Image from "next/image";
 import Link from "next/link";
 
 
-const travelers = [
-  {
-    id: 1,
-    name: "Emily Carter",
-    bio: "Backpacker exploring Asia and Europe",
-    location: "United Kingdom",
-    image: "/travelers/aisha.jpg",
-  },
-  {
-    id: 2,
-    name: "Noah Williams",
-    bio: "Adventure lover & nature photographer",
-    location: "Canada",
-    image: "/travelers/emily.jpg",
-  },
-  {
-    id: 3,
-    name: "Aisha Rahman",
-    bio: "Solo traveler discovering cultural gems",
-    location: "Bangladesh",
-    image: "/travelers/noah.jpeg",
-  },
-];
 
-const FeaturedTravelers = () => {
+const FeaturedTravelers = async () => {
+
+  const res = await fetch("http://localhost:5000/api/users");
+  const responseData = await res.json();
+  const travelers = responseData?.data;
+
+  
   return (
     <section className="py-16 bg-gray-50 dark:bg-neutral-900">
       <div className="container mx-auto px-4">
-        
+
         {/* Section Title */}
         <div className="text-center mb-10">
           <h2 className="text-4xl font-bold text-teal-600 dark:text-teal-400">
@@ -45,16 +27,16 @@ const FeaturedTravelers = () => {
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {travelers.map((traveler) => (
+          {travelers.slice(0, 3).map((traveler) => (
             <div
               key={traveler.id}
-          
+
               className="bg-white dark:bg-neutral-800 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-neutral-700"
             >
               {/* Image */}
               <div className="relative w-full h-56">
                 <Image
-                  src={traveler.image}
+                  src={traveler.profilePhoto}
                   alt={traveler.name}
                   fill
                   sizes="100%"
@@ -65,7 +47,7 @@ const FeaturedTravelers = () => {
               {/* Content */}
               <div className="p-6">
                 <h3 className="text-xl font-semibold">{traveler.name}</h3>
-                <p className="text-sm text-gray-500">{traveler.location}</p>
+                <p className="text-sm text-gray-500">{traveler.address}</p>
                 <p className="mt-3 text-gray-700 dark:text-gray-300 text-sm line-clamp-2">
                   {traveler.bio}
                 </p>

@@ -119,8 +119,8 @@ const PublicNavbar = async () => {
 
   const adminNav = [
     { href: "/admin/profile", label: "Admin Dashboard" },
-    { href: "/admin/manageuser", label: "Manage Users" },
-    { href: "/admin/manage-travelplan", label: "Manage Travel Plans" },
+    { href: "/admin/manage-users", label: "Manage Users" },
+    { href: "/admin/manage-plans", label: "Manage Travel Plans" },
     { href: "/admin/profile", label: "Profile" },
   ];
 

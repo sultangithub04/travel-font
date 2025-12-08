@@ -1,4 +1,4 @@
-"use client";
+
 
 import Image from "next/image";
 import Link from "next/link";
@@ -42,7 +42,10 @@ const topDestinations = [
   },
 ];
 
-export default function TopDestinations() {
+export default async function TopDestinations() {
+  const res= await fetch("http://localhost:5000/api/travel-plans")
+  const result= await res.json()
+  console.log(result.data);
   return (
     <section className="container py-14">
       <div className="text-center mb-12">

@@ -14,9 +14,9 @@ const RegisterPage = () => {
         <div className="w-full max-w-xl">
           <Card>
             <CardHeader>
-              <CardTitle>Create an account</CardTitle>
+              <CardTitle>User Registration</CardTitle>
               <CardDescription>
-                Enter your information below to create your account
+                Enter your information below to register our community
               </CardDescription>
             </CardHeader>
             <CardContent>
