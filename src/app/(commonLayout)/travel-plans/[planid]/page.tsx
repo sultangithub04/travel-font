@@ -30,7 +30,7 @@ export const formatDateTime = (dateStr: string) => {
 export default async function TravelPlanDetailsPage({ params }: { params: Promise<{ planid: string }> }) {
 
   const { planid } = await params
-  const res = await fetch(`http://localhost:5000/api/travel-plans/${planid}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/travel-plans/${planid}`);
   const responseData = await res.json();
   const mockPlan = responseData?.data;
 

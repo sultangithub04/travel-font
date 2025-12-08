@@ -114,7 +114,7 @@
 import Image from "next/image";
 
 const Testi = async () => {
-  const res = await fetch("http://localhost:5000/api/travel-plans", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/travel-plans`, {
     cache: "no-store",
   });
 

@@ -29,7 +29,7 @@ const AdminProfile = async() => {
  
   const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromsession}`)
   const { data } = await resultData.json()
-   const res = await fetch("http://localhost:5000/api/users");
+   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users`);
 
   const responseData = await res.json();
 
