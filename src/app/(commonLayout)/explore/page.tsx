@@ -3,6 +3,7 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import Link from "next/link";
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "react";
+export const dynamic = "force-dynamic";
 
 
 const Explore = async () => {

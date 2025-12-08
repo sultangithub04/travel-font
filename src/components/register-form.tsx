@@ -2,27 +2,27 @@
 "use client";
 
 import { registerPatient } from "@/services/auth/registerPatient";
-import { useActionState, useEffect, useState } from "react";
+import { startTransition, useActionState, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "./ui/field";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
 import SingleImageUploader from "./singleImageFileUpload";
+import { Loader2 } from "lucide-react";
 
 const RegisterForm = () => {
   const [state, formAction, isPending] = useActionState(registerPatient, null);
+
   const [image, setImage] = useState<File | null>(null);
-
-
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
     const newData = new FormData(e.target);
     if (image) newData.append("file", image);
-
-    formAction(newData);
-
+    startTransition(() => {
+      formAction(newData);
+    });
   };
 
 
@@ -175,8 +175,18 @@ const RegisterForm = () => {
         <SingleImageUploader onChange={setImage} />
         <FieldGroup className="mt-4">
           <Field>
-            <Button type="submit" disabled={isPending}>
-              {isPending ? "Registration..." : "Register"}
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="flex items-center justify-center gap-2"
+            >
+              {isPending ? (
+                <>
+                  <Loader2 className="animate-spin h-5 w-5" /> Registering...
+                </>
+              ) : (
+                "Register"
+              )}
             </Button>
 
             <FieldDescription className="px-6 text-center">

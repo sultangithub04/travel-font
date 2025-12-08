@@ -3,6 +3,7 @@
 import TravallerDetailsCard from "@/components/modules/modal/TravallerDetailsCard"
 import { getCookie } from "@/services/auth/tokenHandlers";
 import { redirect } from "next/navigation";
+export const dynamic = "force-dynamic";
 
 
 

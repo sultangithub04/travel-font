@@ -3,6 +3,7 @@ import { getUserInfo } from "@/services/auth/getUserInfo";
 import CreateTravelPlanModal from "@/components/modules/modal/CreateTravelPlanModal";
 import EditTravelPlanModal from "@/components/modules/modal/EditTravelPlanModal";
 import DeleteModal from "@/components/modules/modal/DeleteModal";
+export const dynamic = "force-dynamic";
 
 const TravelPlans = async () => {
   const userInfo = await getUserInfo();

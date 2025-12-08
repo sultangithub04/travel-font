@@ -2,8 +2,9 @@
 import CreateReviewModal from "@/components/modules/modal/CreateReviewModal";
 import ReviewDeleteModal from "@/components/modules/modal/ReviewdeleteModal";
 import ReviewEditModal from "@/components/modules/modal/ReviewEditModal";
-
 import Image from "next/image";
+export const dynamic = "force-dynamic";
+
 
 export const formatDate = (dateStr: string) => {
   return new Date(dateStr).toLocaleDateString("en-US", {
