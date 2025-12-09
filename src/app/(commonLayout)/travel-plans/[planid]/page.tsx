@@ -2,36 +2,14 @@
 import CreateReviewModal from "@/components/modules/modal/CreateReviewModal";
 import ReviewDeleteModal from "@/components/modules/modal/ReviewdeleteModal";
 import ReviewEditModal from "@/components/modules/modal/ReviewEditModal";
+import { formatDate, formatDateTime } from "@/components/shared/formatedDate";
 import Image from "next/image";
-export const dynamic = "force-dynamic";
 
 
-export const formatDate = (dateStr: string) => {
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-};
-
-export const formatDateTime = (dateStr: string) => {
-  return new Date(dateStr).toLocaleString("en-US", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: true, // AM/PM দেখাবে
-  });
-};
-
-
-
-export default async function TravelPlanDetailsPage({ params }: { params: Promise<{ planid: string }> }) {
+export default async function TravelPlanDetailsPage({ params }: { params: Promise<{ planid: string }>}) {
 
   const { planid } = await params
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/travel-plans/${planid}`, { cache: "no-store" });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/travel-plans/${planid}`);
   const responseData = await res.json();
   const mockPlan = responseData?.data;
 
@@ -44,7 +22,7 @@ export default async function TravelPlanDetailsPage({ params }: { params: Promis
       <div className="flex items-center gap-4 mb-6">
         <div className="w-16 h-16 relative rounded-full overflow-hidden border-2 border-teal-500">
           <Image
-            src={mockPlan.user.traveller.profilePhoto}
+            src={mockPlan.user?.traveller?.profilePhoto}
             alt={mockPlan.user.name}
             fill
             sizes="100%"

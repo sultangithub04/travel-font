@@ -1,50 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import Link from "next/link";
-import { User, Calendar } from "lucide-react";
+import {  Calendar } from "lucide-react";
+import SubscribeModal from "@/components/modules/Home/SubscribeModal";
 
-// Mock travel plans data
-const travelPlans = [
-  {
-    id: 1,
-    destination: "Paris, France",
-    startDate: "2025-12-15",
-    endDate: "2025-12-22",
-    budgetRange: "$1000 - $2000",
-    travelType: "SOLO",
-    host: {
-      id: "1",
-      name: "Emily Carter",
-      profileImage: "/travelers/emily.jpg",
-    },
-  },
-  {
-    id: 2,
-    destination: "Tokyo, Japan",
-    startDate: "2025-11-10",
-    endDate: "2025-11-20",
-    budgetRange: "$2000 - $3000",
-    travelType: "FRIENDS",
-    host: {
-      id: "2",
-      name: "Noah Williams",
-      profileImage: "/travelers/noah.jpeg",
-    },
-  },
-  {
-    id: 3,
-    destination: "Bangkok, Thailand",
-    startDate: "2026-01-05",
-    endDate: "2026-01-15",
-    budgetRange: "$1500 - $2500",
-    travelType: "FAMILY",
-    host: {
-      id: "3",
-      name: "Aisha Rahman",
-      profileImage: "/travelers/aisha.jpg",
-    },
-  },
-];
+
 
 const FindBuddy = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users`, { cache: "no-store" });
@@ -112,12 +72,13 @@ const FindBuddy = async () => {
 
             </div>
 
-            <Link
+            {/* <Link
               href={`/travel-plans/${plan.id}`}
               className="inline-block mt-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all text-sm w-full text-center"
             >
               Request to Join
-            </Link>
+            </Link> */}
+            <SubscribeModal/>
           </div>
         ))}
       </div>

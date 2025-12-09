@@ -18,8 +18,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "PH-Health-Care",
-  description: "A healthcare application built with Next.js",
+  title: "A Travaller Solution",
+  description: "Travaller application built with Next.js",
+  icons: {
+    icon: '/favicon.gif',
+  },
 };
 
 export default function RootLayout({
