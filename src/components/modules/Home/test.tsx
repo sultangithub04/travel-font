@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import Image from "next/image";
+import Link from "next/link";
 
 const Testi = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/travel-plans`, {
@@ -43,7 +45,7 @@ const Testi = async () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-          {reviews.map((testimonial) => (
+          {reviews.map((testimonial: any) => (
             <div
               key={testimonial.id}
               className="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-6 border border-gray-200 dark:border-neutral-700"
@@ -98,9 +100,13 @@ const Testi = async () => {
         </div>
 
         <div className="text-center mt-10">
-          <div className="px-6 py-3 bg-teal-600 text-white rounded-lg shadow-md hover:bg-teal-700 transition-all">
-            Explore Travelers
-          </div>
+        
+          <Link
+            href="/explore"
+            className="px-6 py-3 bg-teal-600 rounded-lg text-white hover:bg-teal-700 transition-all shadow-md"
+          >
+             Explore Travelers
+          </Link>
         </div>
 
       </div>

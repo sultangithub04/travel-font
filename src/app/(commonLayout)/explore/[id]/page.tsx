@@ -77,7 +77,7 @@ export const generateMetadata = async ({ params }: { params: { id: string } }) =
 };
 
 export default async function TravallerDetailsPage({ params }: { params: { id: string } }) {
-    const { id } = params;
+    const { id } =await params;
 
     let results = null;
 
