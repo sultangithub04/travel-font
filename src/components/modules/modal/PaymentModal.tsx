@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useState } from "react";
 
-export default function SubscribePaymentModal({ id }: { id: string }) {
+export default function PaymentModal({ id }: { id: string }) {
   const router = useRouter();
   const [processing, setProcessing] = useState(false);
 
@@ -37,7 +37,7 @@ export default function SubscribePaymentModal({ id }: { id: string }) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          userId: id,
+          travellerId: id,
           subscriptionType,
           amount,
 

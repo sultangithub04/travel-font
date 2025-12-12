@@ -7,14 +7,15 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export default function CreateTravelPlanModal() {
-   const router = useRouter();
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     destination: "",
     startDate: "",
     endDate: "",
-    budgetRange: "",
+    budgetMin: "",
+    budgetMax: "",
     travelType: "SOLO",
     description: "",
   });
@@ -29,15 +30,16 @@ export default function CreateTravelPlanModal() {
     e.preventDefault();
     const userInformation = await getUserInfo();
     const emailFromsession = userInformation?.email
-    const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromsession}`,{ cache: "no-store" })
-    const { data:userInfo } = await resultData.json()
+    const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromsession}`, { cache: "no-store" })
+    const { data: userInfo } = await resultData.json()
 
     const payload = {
-      userId: userInfo?.id,
+      travellerId: userInfo?.traveller?.id,
       ...formData,
-      startDate: new Date(formData.startDate).toISOString(),
-      endDate: new Date(formData.endDate).toISOString(),
+      // startDate: new Date(formData.startDate).toISOString(),
+      // endDate: new Date(formData.endDate).toISOString(),
     };
+    console.log("create plan", payload);
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/travel-plans`, {
@@ -54,7 +56,8 @@ export default function CreateTravelPlanModal() {
         destination: "",
         startDate: "",
         endDate: "",
-        budgetRange: "",
+        budgetMin: "",
+        budgetMax: "",
         travelType: "SOLO",
         description: "",
       });
@@ -143,14 +146,27 @@ export default function CreateTravelPlanModal() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1" htmlFor="budgetRange">Budget Range</label>
+                <label className="block text-sm font-medium mb-1" htmlFor="budgetRange">Budget Min</label>
                 <input
-                  type="text"
-                  id="budgetRange"
-                  name="budgetRange"
-                  value={formData.budgetRange}
+                  type="number"
+                  id="budgetMin"
+                  name="budgetMin"
+                  value={formData.budgetMin}
                   onChange={handleChange}
-                  placeholder="10000 - 20000 BDT"
+                  placeholder="10000"
+                  required
+                  className="w-full rounded-md border px-3 py-2 focus:ring focus:ring-teal-200"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1" htmlFor="budgetRange">Budget Max</label>
+                <input
+                  type="number"
+                  id="budgetMax"
+                  name="budgetMax"
+                  value={formData.budgetMax}
+                  onChange={handleChange}
+                  placeholder="20000"
                   required
                   className="w-full rounded-md border px-3 py-2 focus:ring focus:ring-teal-200"
                 />

@@ -39,7 +39,7 @@ const Explore = () => {
   }, []);
 
   // FILTER LOGIC
-  const filteredResults = results.filter((traveler: any) => {
+  const filteredResults = results?.filter((traveler: any) => {
     const matchName = traveler?.name
       ?.toLowerCase()
       .includes(searchName.toLowerCase());
@@ -53,7 +53,7 @@ const Explore = () => {
       searchTravelType === "" ||
       traveler?.travelPlans?.some(
         (plan: any) =>
-          plan.travelType?.toLowerCase() === searchTravelType.toLowerCase()
+          plan?.travelType?.toLowerCase() === searchTravelType.toLowerCase()
       );
 
     return matchName && matchAddress && matchTravelType;
@@ -97,7 +97,7 @@ const Explore = () => {
 
       {loading ? (
         <p className="text-center text-gray-500">Loading...</p>
-      ) : filteredResults.length > 0 ? (
+      ) : filteredResults?.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredResults.map((traveler: any) => (
             <div
@@ -124,7 +124,7 @@ const Explore = () => {
                         key={plan._id}
                         className="px-2 py-1 bg-teal-100 text-teal-700 rounded-md mr-2"
                       >
-                        {plan.travelType}
+                        {plan?.travelType}
                       </span>
                     ))}
                   </p>
@@ -132,7 +132,7 @@ const Explore = () => {
               </div>
 
               <Link
-                href={`/explore/${traveler.id}`}
+                href={`/explore/${traveler?.id}`}
                 className="inline-block mt-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-all text-sm"
               >
                 View Profile

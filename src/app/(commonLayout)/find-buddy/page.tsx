@@ -11,7 +11,7 @@ const FindBuddy = async () => {
 
   const responseData = await res.json();
   const travelPlans = responseData?.data;
-  console.log(travelPlans);
+
 
 
   // Here you can fetch real data from API

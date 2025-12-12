@@ -5,7 +5,7 @@ import EditTravelPlanModal from "@/components/modules/modal/EditTravelPlanModal"
 import DeleteModal from "@/components/modules/modal/DeleteModal";
 import { formatDate } from "@/components/shared/formatedDate";
 import PaymentModal from "@/components/modules/modal/PaymentModal";
-import { Button } from "@/components/ui/button";
+
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +19,9 @@ const TravelPlans = async () => {
     { cache: "no-store" }
   );
   const { data } = await resultData.json();
-  const userTravelPlans = data.travelPlans || [];
+  const userTravelPlans = data?.traveller?.travelPlans || [];
+
+
 
 
   // 2️⃣ All Other Travel Plans
@@ -33,6 +35,8 @@ const TravelPlans = async () => {
   console.log(allTravelPlans);
 
 
+
+
   return (
     <div className="container mx-auto px-4 py-12">
 
@@ -42,7 +46,7 @@ const TravelPlans = async () => {
         <CreateTravelPlanModal />
       </div>
 
-      {userTravelPlans.length > 0 ? (
+      {userTravelPlans?.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {userTravelPlans.map((plan: any) => (
             <div
@@ -57,7 +61,8 @@ const TravelPlans = async () => {
                   {formatDate(plan.startDate)} →
                   {formatDate(plan.endDate)}
                 </p>
-                <p>Budget: {plan.budgetRange}</p>
+                <p>Miximum Budget: {plan.budgetMin}</p>
+                <p>Maximum Budget: {plan.budgetMax}</p>
                 <p>Travel Type: {plan.travelType}</p>
               </div>
 
@@ -79,7 +84,7 @@ const TravelPlans = async () => {
         All Travelers Plans
       </h2>
 
-      {allTravelPlans.length > 0 ? (
+      {allTravelPlans?.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
           {allTravelPlans.map((plan: any) => (
             <div
@@ -98,15 +103,16 @@ const TravelPlans = async () => {
                   {formatDate(plan.startDate)} →
                   {formatDate(plan.endDate)}
                 </p>
-                <p>Budget: {plan.budgetRange}</p>
+                <p>Min Budget: {plan.budgetMin}</p>
+                <p>Max Budget: {plan.budgetMax}</p>
               </div>
 
               <p className="text-sm mt-2">
                 <strong>Travel Type:</strong> {plan.travelType}
               </p>
 
-
-              <PaymentModal id={plan.userId} />
+   
+              <PaymentModal id={plan?.travellerId} />
 
               {/* {plan?.status === "UNPAID" ? (
 
@@ -124,13 +130,13 @@ const TravelPlans = async () => {
 
 
 
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  ) : (
-    <p className="text-gray-500 text-center">No travel plans found.</p>
-  )
-}
+      ) : (
+        <p className="text-gray-500 text-center">No travel plans found.</p>
+      )
+      }
     </div >
   );
 };

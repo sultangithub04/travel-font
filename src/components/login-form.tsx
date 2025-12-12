@@ -13,7 +13,7 @@ const LoginForm = ({ redirect }: { redirect?: string }) => {
   const getFieldError = (fieldName: string) => {
     if (state && state.errors) {
       const error = state.errors.find((err: any) => err.field === fieldName);
-      return error.message;
+      return  error?.message ?? null;
     } else {
       return null;
     }

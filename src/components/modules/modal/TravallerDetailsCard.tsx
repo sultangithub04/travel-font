@@ -2,6 +2,7 @@
 import Image from "next/image";
 
 export default async function TravallerDetailsCard({ results }: { results: any }) {
+  console.log(results);
   if (!results) {
     return (
       <div className="min-h-screen flex items-center justify-center text-gray-400">
@@ -78,34 +79,21 @@ export default async function TravallerDetailsCard({ results }: { results: any }
         {/* Travel Highlights */}
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-5">
           
-          {/* Travel Interests */}
+       
+
+         {/* Travel Interests */}
           <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 shadow-lg">
             <h3 className="text-lg font-semibold text-white mb-3">Travel Interests</h3>
-            {results.travelInterests ? (
-              <ul className="list-disc ml-4 text-gray-300 space-y-1">
-                {results.travelInterests.map((interest: string, idx: number) => (
-                  <li key={idx}>{interest}</li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-400">No interests added</p>
-            )}
+           <p className="text-gray-300">{results.travelInterests ? results.travelInterests : (
+              <p className="text-gray-400">No data yet</p>
+            )}</p> 
           </div>
-
           {/* Countries Visited */}
           <div className="bg-white/10 backdrop-blur-md p-6 rounded-xl border border-white/20 shadow-lg">
             <h3 className="text-lg font-semibold text-white mb-3">Visited Countries</h3>
-            {results.visitedCountries ? (
-              <ul className="text-gray-300 space-y-2">
-                {results.visitedCountries.map((country: string, idx: number) => (
-                  <li key={idx} className="bg-teal-600/30 px-3 py-1 rounded-md inline-block">
-                    {country}
-                  </li>
-                ))}
-              </ul>
-            ) : (
+           <p className="text-gray-300">{results.visitedCountries ? results.visitedCountries : (
               <p className="text-gray-400">No data yet</p>
-            )}
+            )}</p> 
           </div>
 
           {/* Currently Traveling */}

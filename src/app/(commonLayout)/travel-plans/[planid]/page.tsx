@@ -9,9 +9,11 @@ import Image from "next/image";
 export default async function TravelPlanDetailsPage({ params }: { params: Promise<{ planid: string }>}) {
 
   const { planid } = await params
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/travel-plans/${planid}`);
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/travel-plans/${Number(planid)}`);
   const responseData = await res.json();
   const mockPlan = responseData?.data;
+  console.log(mockPlan);
 
   return (
     <div className="min-h-screen py-10 px-4 max-w-4xl mx-auto">
@@ -20,7 +22,7 @@ export default async function TravelPlanDetailsPage({ params }: { params: Promis
 
       {/* Traveler Info */}
       <div className="flex items-center gap-4 mb-6">
-        <div className="w-16 h-16 relative rounded-full overflow-hidden border-2 border-teal-500">
+        {/* <div className="w-16 h-16 relative rounded-full overflow-hidden border-2 border-teal-500">
           <Image
             src={mockPlan.user?.traveller?.profilePhoto}
             alt={mockPlan.user.name}
@@ -28,10 +30,10 @@ export default async function TravelPlanDetailsPage({ params }: { params: Promis
             sizes="100%"
             className="object-cover"
           />
-        </div>
+        </div> */}
         <div>
-          <p className="font-semibold text-lg">{mockPlan.user.name}</p>
-          <p className="text-sm text-gray-500">{mockPlan.user.address}</p>
+          <p className="font-semibold text-lg">{mockPlan.traveller.name}</p>
+          <p className="text-sm text-gray-500">{mockPlan.traveller.address}</p>
         </div>
       </div>
 
@@ -57,12 +59,12 @@ export default async function TravelPlanDetailsPage({ params }: { params: Promis
 
       {/* Add Review Button */}
 
-      <CreateReviewModal planId={mockPlan.id} planOwnerId={mockPlan.user.id} />
+      <CreateReviewModal planId={mockPlan.id} planOwnerId={mockPlan.traveller.id} />
 
       {/* Reviews Section */}
       <div>
         <h2 className="text-2xl font-semibold mb-4">Reviews</h2>
-        {mockPlan.reviews.length === 0 ? (
+        {mockPlan.reviews?.length === 0 ? (
           <p className="text-gray-500">No reviews yet.</p>
         ) : (
           mockPlan.reviews.map((review:any) => (

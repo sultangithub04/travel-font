@@ -30,9 +30,10 @@ export default function CreateReviewModal({ planId, planOwnerId }: { planId: num
       // Get user info
       const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromSession}`, { cache: "no-store" });
       const { data: userInfo } = await resultData.json();
+      console.log(userInfo);
 
       const payload = {
-        reviewerId: userInfo?.id,
+        reviewerId: userInfo?.traveller.id,
         revieweeId: planOwnerId, // <--- এখানে correct owner ID
         planId,
         rating: Number(formData.rating),

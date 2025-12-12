@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getUserInfo } from "@/services/auth/getUserInfo";
 import { Calendar, Star } from "lucide-react";
 import Image from "next/image";
@@ -5,14 +6,16 @@ import Link from "next/link";
 
 const UserProfile = async () => {
   const userInfo = await getUserInfo();
-  const emailFromsession= userInfo?.email
- 
+  const emailFromsession = userInfo?.email
+
   const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromsession}`, { cache: "no-store" })
   const { data } = await resultData.json()
-  const user= data?.traveller
-
-
+  console.log(data);
+  const user = data?.traveller
   console.log(user);
+  const myPlan = user?.travelPlans
+
+  console.log(myPlan);
   return (
     <div className="container mx-auto px-4 py-12">
       {/* Profile Header */}
@@ -43,9 +46,9 @@ const UserProfile = async () => {
       <div className="mt-12">
         <h2 className="text-2xl font-semibold text-teal-600 mb-4">Upcoming Travel Plans</h2>
 
-        {data.travelPlans?.length > 0 ? (
+        {myPlan?.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {data.travelPlans.map((plan: any) => (
+            {myPlan?.map((plan: any) => (
               <div
                 key={plan.id}
                 className="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-4 border border-gray-200 dark:border-neutral-700"
@@ -74,9 +77,9 @@ const UserProfile = async () => {
       <div className="mt-12">
         <h2 className="text-2xl font-semibold text-teal-600 mb-4">Reviews Received</h2>
 
-        {data.reviewsReceived?.length > 0 ? (
+        {user.reviewsReceived?.length > 0 ? (
           <div className="space-y-4">
-            {data.reviewsReceived.map((review: any) => (
+            {user.reviewsReceived.map((review: any) => (
               <div
                 key={review.id}
                 className="bg-white dark:bg-neutral-800 rounded-xl shadow p-4 border border-gray-200 dark:border-neutral-700"

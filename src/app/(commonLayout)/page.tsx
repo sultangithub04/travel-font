@@ -48,7 +48,10 @@ export default function Home() {
       </Head>
       <main>
         {/* <Hero /> */}
+        <div className="flex flex-col items-center w-full">
         <TopDestinations />
+
+        </div>
 
         <section className="py-16 bg-white text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Find Your Travel Partner?</h2>

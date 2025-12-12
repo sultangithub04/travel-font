@@ -75,7 +75,7 @@ const ReviewList = () => {
     <div className="space-y-4 p-4">
       <h2 className="text-2xl font-bold mb-3">Reviews</h2>
 
-      {reviews.length === 0 && (
+      {reviews?.length === 0 && (
         <p className="text-gray-500">No reviews found</p>
       )}
 

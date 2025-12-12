@@ -54,7 +54,7 @@ export default function EditReviewModal({
       const { data: userInfo } = await resultData.json();
 
       const payload = {
-        reviewerId: userInfo?.id,
+        reviewerId: userInfo?.traveller.id,
         rating: Number(formData.rating),
         comment: formData.comment,
       };

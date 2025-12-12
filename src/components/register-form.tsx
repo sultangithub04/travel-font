@@ -19,6 +19,7 @@ const RegisterForm = () => {
     e.preventDefault();
 
     const newData = new FormData(e.target);
+  
     if (image) newData.append("file", image);
     startTransition(() => {
       formAction(newData);

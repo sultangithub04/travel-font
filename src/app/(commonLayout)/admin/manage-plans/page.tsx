@@ -100,7 +100,7 @@ export default function ManageTravelPlansPage() {
         <div className="flex justify-center py-10">
           <Loader2 className="animate-spin h-8 w-8" />
         </div>
-      ) : plans.length === 0 ? (
+      ) : plans?.length === 0 ? (
         <p className="text-center text-muted-foreground pt-10">
           No travel plans available
         </p>

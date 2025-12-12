@@ -80,6 +80,7 @@ export const registerPatient = async (_currentState: any, formData: FormData): P
         if (file) {
             newFormData.append("file", file);
         }
+        console.log(newFormData);
         
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/register`, {
             method: "POST",
