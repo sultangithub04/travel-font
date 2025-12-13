@@ -88,9 +88,29 @@ const UserProfile = async () => {
                   <h3 className="font-semibold">
                     Reviewer ID: {review.reviewerId}
                   </h3>
-                  <div className="flex items-center">
-                    {[...Array(review.rating)].map((_, i) => (
-                      <Star key={i} size={16} className="text-yellow-400" />
+                  <div className="flex items-center mb-2">
+                    {Array.from({ length: review.rating }).map((_, idx) => (
+                      <svg
+                        key={idx}
+                        className="w-4 h-4 text-yellow-400"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 
+      3.966a1 1 0 00.95.69h4.174c.969 
+      0 1.371 1.24.588 1.81l-3.381 
+      2.455a1 1 0 00-.364 1.118l1.287 
+      3.966c.3.921-.756 1.688-1.54 
+      1.118L10 15.347l-3.381 2.455c-.783 
+      .57-1.838-.197-1.539-1.118l1.287-3.966a1 
+      1 0 00-.364-1.118L2.62 9.393c-.783 
+      -.57-.38-1.81.588-1.81h4.174a1 1 0 
+      00.95-.69l1.286-3.966z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
                     ))}
                   </div>
                 </div>
