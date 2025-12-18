@@ -31,7 +31,7 @@ export default function PaymentModal({ id }: { id: string }) {
     try {
       setProcessing(true);
 
-      const res = await fetch("http://localhost:5000/api/payments/create-intent", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/payments/create-intent`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
