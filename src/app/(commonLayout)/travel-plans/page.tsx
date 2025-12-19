@@ -5,6 +5,7 @@ import EditTravelPlanModal from "@/components/modules/modal/EditTravelPlanModal"
 import DeleteModal from "@/components/modules/modal/DeleteModal";
 import { formatDate } from "@/components/shared/formatedDate";
 import PaymentModal from "@/components/modules/modal/PaymentModal";
+import { Button } from "@/components/ui/button";
 
 
 export const dynamic = "force-dynamic";
@@ -86,52 +87,58 @@ const TravelPlans = async () => {
 
       {allTravelPlans?.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
-          {allTravelPlans.map((plan: any) => (
-            <div
-              key={plan.id}
-              className="bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6 border"
-            >
-              <h2 className="text-lg font-semibold">{plan.title}</h2>
+      {allTravelPlans.map((plan: any) => {
+  const isPaid = plan.status === "PAID";
 
-              <p className="text-sm mt-2">
-                <strong>Destination:</strong> {plan.destination}
-              </p>
+  return (
+    <div
+      key={plan.id}
+      className="bg-white dark:bg-neutral-800 rounded-xl shadow-md p-6 border hover:shadow-lg transition"
+    >
+      {/* Title */}
+      <div className="flex justify-between items-center mb-2">
+        <h2 className="text-lg font-semibold">{plan.title}</h2>
 
-              <div className="text-sm mt-3">
+        {isPaid && (
+          <span className="px-3 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded-full">
+            Paid
+          </span>
+        )}
+      </div>
 
-                <p>
-                  {formatDate(plan.startDate)} →
-                  {formatDate(plan.endDate)}
-                </p>
-                <p>Min Budget: {plan.budgetMin}</p>
-                <p>Max Budget: {plan.budgetMax}</p>
-              </div>
+      {/* Info */}
+      <p className="text-sm">
+        <strong>Destination:</strong> {plan.destination}
+      </p>
 
-              <p className="text-sm mt-2">
-                <strong>Travel Type:</strong> {plan.travelType}
-              </p>
+      <div className="text-sm mt-2 text-gray-600 dark:text-gray-300">
+        <p>
+          {formatDate(plan.startDate)} → {formatDate(plan.endDate)}
+        </p>
+        <p>Min Budget: {plan.budgetMin}</p>
+        <p>Max Budget: {plan.budgetMax}</p>
+        <p>
+          <strong>Travel Type:</strong> {plan.travelType}
+        </p>
+      </div>
 
-   
-              <PaymentModal id={plan?.travellerId} />
+      {/* Action */}
+      <div className="mt-4">
+        {!isPaid ? (
+          <PaymentModal id={plan.id} />
+        ) : (
+          <Button
+            disabled
+            className="w-full bg-green-600 text-white cursor-not-allowed opacity-80"
+          >
+            Payment Completed
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+})}
 
-              {/* {plan?.status === "UNPAID" ? (
-
-
-              ): (
-                  <Button className = "px-4 py-2 disabled bg-teal-600 hover:bg-teal-700 text-white rounded-lg mt-4 w-full">
-                  Subscribed
-                </Button>
-
-          )} */}
-
-
-
-
-
-
-
-            </div>
-          ))}
         </div>
       ) : (
         <p className="text-gray-500 text-center">No travel plans found.</p>

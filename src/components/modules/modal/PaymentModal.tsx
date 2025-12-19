@@ -37,7 +37,7 @@ export default function PaymentModal({ id }: { id: string }) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          travellerId: id,
+          travelPlanId: id,
           subscriptionType,
           amount,
 
