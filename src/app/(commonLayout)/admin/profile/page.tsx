@@ -6,36 +6,38 @@ import { Users, Plane, Star, Settings, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { getUserInfo } from "@/services/auth/getUserInfo";
 
-const admin = {
-  id: "admin-01",
-  name: "Admin User",
-  email: "admin@example.com",
-  profileImage: "/admin.jpg",
-  role: "admin",
-  createdUsers: 120,
-  approvedPlans: 56,
-  verifiedUsers: 19,
-  recentActions: [
-    "Approved travel plan: Japan Trip",
-    "Verified user: Emily Carter",
-    "Deleted review marked as spam",
-  ],
-};
 
-const AdminProfile = async() => {
+
+const AdminProfile = async () => {
 
   const userInfo = await getUserInfo();
-  const emailFromsession= userInfo?.email
- 
-  const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users/${emailFromsession}`, { cache: "no-store" })
-  const { data } = await resultData.json()
-   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users`, { cache: "no-store" });
+  const emailFromsession = userInfo?.email
+  console.log(emailFromsession);
 
+  const resultData = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/users`, { cache: "no-store" })
+  const { data } = await resultData.json()
+  console.log(data);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/meta`, { cache: "no-store" });
   const responseData = await res.json();
 
-  console.log(responseData);
 
-console.log(data);
+
+  const admin = {
+    id: "admin-01",
+    name: "Admin User",
+    email: emailFromsession,
+    profileImage: "/emily.jpg",
+    role: "admin",
+    createdUsers: responseData?.data?.travellerCount,
+    approvedPlans: responseData?.data?.travelPlanCount,
+    verifiedUsers: responseData?.data?.travellerCount,
+    totalRevenue: responseData?.data?.totalRevenue._sum.amount,
+    recentActions: [
+      "Approved travel plan: Japan Trip",
+      "Verified user: Emily Carter",
+      "Deleted review marked as spam",
+    ],
+  };
   return (
     <div className="container mx-auto px-4 py-12">
       {/* Profile Header */}
@@ -60,9 +62,9 @@ console.log(data);
       </div>
 
       {/* Stats Section */}
-      <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div className="mt-12 grid grid-cols-1 sm:grid-cols-4 gap-6">
         <div
-         
+
           className="bg-white dark:bg-neutral-800 border p-6 rounded-xl shadow-md"
         >
           <div className="flex justify-between">
@@ -73,7 +75,7 @@ console.log(data);
         </div>
 
         <div
-         
+
           className="bg-white dark:bg-neutral-800 border p-6 rounded-xl shadow-md"
         >
           <div className="flex justify-between">
@@ -84,7 +86,7 @@ console.log(data);
         </div>
 
         <div
- 
+
           className="bg-white dark:bg-neutral-800 border p-6 rounded-xl shadow-md"
         >
           <div className="flex justify-between">
@@ -92,6 +94,16 @@ console.log(data);
             <Star className="text-teal-600" />
           </div>
           <h2 className="text-3xl font-bold mt-3">{admin.verifiedUsers}</h2>
+        </div>
+        <div
+
+          className="bg-white dark:bg-neutral-800 border p-6 rounded-xl shadow-md"
+        >
+          <div className="flex justify-between">
+            <p className="text-lg font-semibold">Total Revenue</p>
+            <Star className="text-teal-600" />
+          </div>
+          <h2 className="text-3xl font-bold mt-3">{admin.totalRevenue}</h2>
         </div>
       </div>
 
@@ -102,7 +114,7 @@ console.log(data);
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <Link href="/admin/manage-users">
             <div
-          
+
               className="p-4 border rounded-xl bg-gray-50 dark:bg-neutral-900 hover:border-teal-500 shadow cursor-pointer"
             >
               <p className="font-semibold text-lg">Manage Users</p>
@@ -112,7 +124,7 @@ console.log(data);
 
           <Link href="/admin/manage-plans">
             <div
-         
+
               className="p-4 border rounded-xl bg-gray-50 dark:bg-neutral-900 hover:border-teal-500 shadow cursor-pointer"
             >
               <p className="font-semibold text-lg">Manage Travel Plans</p>
@@ -122,7 +134,7 @@ console.log(data);
 
           <Link href="/admin/reviews">
             <div
-          
+
               className="p-4 border rounded-xl bg-gray-50 dark:bg-neutral-900 hover:border-teal-500 shadow cursor-pointer"
             >
               <p className="font-semibold text-lg">Manage Reviews</p>

@@ -78,7 +78,7 @@ const FindBuddy = async () => {
             >
               Request to Join
             </Link> */}
-            <SubscribeModal/>
+            <SubscribeModal id={plan.id}/>
           </div>
         ))}
       </div>

@@ -12,19 +12,19 @@ function PublicFooter() {
           <div>
             <h3 className="font-semibold mb-2">Quick Links</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="#" className="text-muted-foreground hover:text-foreground">Home</Link></li>
-              <li><Link href="#" className="text-muted-foreground hover:text-foreground">About Us</Link></li>
-              <li><Link href="#" className="text-muted-foreground hover:text-foreground">Services</Link></li>
-              <li><Link href="#" className="text-muted-foreground hover:text-foreground">Contact</Link></li>
+              <li><Link href="/" className="text-muted-foreground hover:text-foreground">Home</Link></li>
+              <li><Link href="/aboutus" className="text-muted-foreground hover:text-foreground">About Us</Link></li>
+              <li><Link href="/explore" className="text-muted-foreground hover:text-foreground">Explore</Link></li>
+              <li><Link href="/register" className="text-muted-foreground hover:text-foreground">register</Link></li>
             </ul>
           </div>
           <div>
             <h3 className="font-semibold mb-2">Support</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link href="#" className="text-muted-foreground hover:text-foreground">FAQ</Link></li>
-              <li><Link href="#" className="text-muted-foreground hover:text-foreground">Help Center</Link></li>
-              <li><Link href="#" className="text-muted-foreground hover:text-foreground">Terms of Service</Link></li>
-              <li><Link href="#" className="text-muted-foreground hover:text-foreground">Privacy Policy</Link></li>
+              <li><Link href="/faq" className="text-muted-foreground hover:text-foreground">FAQ</Link></li>
+              <li><Link href="/help" className="text-muted-foreground hover:text-foreground">Help Center</Link></li>
+              <li><Link href="/terms" className="text-muted-foreground hover:text-foreground">Terms of Service</Link></li>
+              <li><Link href="/privacy" className="text-muted-foreground hover:text-foreground">Privacy Policy</Link></li>
             </ul>
           </div>
           <div>
